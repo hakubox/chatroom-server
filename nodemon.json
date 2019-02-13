@@ -1,0 +1,6 @@
+{
+    "watch": ["server", "src"],
+    "ext": "js",
+    "exec": "node",
+    "verbose": false
+  }

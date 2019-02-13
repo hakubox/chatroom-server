@@ -1,0 +1,36 @@
+body {
+    .example {
+        background-color: bisque;
+        color: brown;
+    }
+
+    .tooltip {
+        opacity: 0.0;
+        transition: 0.1s;
+        transform: translateY(-5px);
+    }
+
+    .tooltip.active {
+        opacity: 1.0;
+        transform: translateY(0px);
+    }
+
+    .login-body {
+        z-index: 100;
+
+        .login-form {
+            border-radius: 10px;
+            height: 240px;
+
+            > button {
+                margin-top: 10px;
+            }
+
+            > .input + .input {
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+
+}
