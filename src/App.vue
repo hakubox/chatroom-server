@@ -18,14 +18,27 @@
 
         聊天
         <hr>
-        <div class="form cols1">
-            <dl :sid="item.userGId" v-for="(item, index) in userMsgList" :key="index">
-                <dt>{{item.nickname}}说</dt>
-                <dd>{{item.content}}</dd>
-            </dl>
+        <div class="chatform">
+            <div class="chatform-content">
+                <div class="chatform-group" :class="{'active': item.nickname === '管理员'}" v-for="(item, index) in userMsgList" :key="index">
+                    <div class="chatform-head" v-show="item.nickname !== '管理员'" :style="{'background-image':'url(https://www.agri35.com/UploadFiles/img_2_2365344459_2446449051_26.jpg)'}"></div>
+                    <div class="chatform-item" :sid="item.userGId">
+                        <dl>
+                            <!-- <dt>{{item.nickname}}说</dt> -->
+                            <dd>{{item.content}}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <!-- 底部输入框 -->
+            <div class="chatform-inputform">
+                <ul>
+
+                </ul>
+                <textarea class="input" v-model="userMsg" @keypress.ctrl.enter="sendMsg"></textarea>
+                <button class="chatform-send" @click="sendMsg">→</button>
+            </div>
         </div>
-        <textarea class="input" v-model="userMsg" @keypress.ctrl.enter="sendMsg"></textarea>
-        <a class="btn btn-primary" @click="sendMsg">发送</a>
 
 
         <!-- 登录浮动层 -->
@@ -191,7 +204,11 @@
     }
 </script>
 
-<style>
+<style lang="less">
+
+    html {
+        height: auto;
+    }
 
     .page-root:after {
         content: '';
@@ -218,7 +235,7 @@
         transition: 0.15s;
         top: 0px;
         left: 0px;
-        width: 100%;
+        width: 99%;
         height: 100%;
     }
 
@@ -230,6 +247,135 @@
         bottom: 0;
         left: 0;
         right: 0;
+
+    }
+
+    //聊天窗口
+    .chatform {
+        width: 400px;
+        height: 700px;
+        margin: auto;
+        background-color: #4C4A48;
+        background-image: url(https://b-ssl.duitang.com/uploads/item/201508/01/20150801081048_ji5r3.thumb.1900_0.jpeg);
+        background-size: cover;
+        background-position: center center;
+
+        //底部输入框
+        > .chatform-inputform {
+            background-color: white;
+            height: 40px;
+            border-top: 1px solid rgba(0,0,0,0.6);
+
+            > textarea {
+                height: 40px;
+                min-height: 40px;
+                width: calc(100% - 40px);
+                border: none;
+                resize: none;
+                overflow: hidden;
+                float: left;
+                background-color: #e2e2f3;
+            }
+
+            > .chatform-send {
+                height: 40px;
+                width: 40px;
+                vertical-align: top;
+                border: none;
+                background-color: #7877EC;
+                color: white;
+                font-size: 13px;
+                font-weight: bold;
+                line-height: 38px;
+            }
+        }
+
+        > .chatform-content {
+            padding: 20px 10px 20px 10px;
+            overflow-y: auto;
+            height: 660px;
+            box-sizing: border-box;
+
+            //对话组（单人多条消息）
+            > .chatform-group {
+                margin-bottom: 10px;
+
+                > .chatform-head {
+                    position: relative;
+                    user-select: none;
+                    display: inline-block;
+                    margin-top: 2px;
+                    margin-right: 5px;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    user-select: none;
+                    background-size: cover;
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                }
+
+                > .chatform-item {
+                    text-align: left;
+                    width: calc(100% - 50px);
+                    display: inline-block;
+                    vertical-align: top;
+
+                    > dl {
+                        display: inline-block;
+                        margin: 0px 0px 0px 0px;
+                        background-color: rgba(0,0,0,0.4);
+                        padding: 10px;
+                        border-radius: 10px;
+                        border-top-left-radius: 0px;
+
+                        > dt {
+                            font-size: 12px;
+                            min-width: 50px;
+                            padding-left: 20px;
+                            line-height: 20px;
+                            padding-bottom: 5px;
+                            text-align: right;
+                            color: #FF798D;
+                            font-weight: bold;
+                        }
+
+                        > dd {
+                            font-size: 13px;
+                            margin-left: 0px;
+                            color: #DDD;
+                            text-align: right;
+                        }
+                    }
+                }
+
+                &.active {
+
+                    > .chatform-item {
+                        text-align: right;
+                        width: 100%;
+
+                        > dl {
+                            background-color: #7877ec;
+                            border-top-right-radius: 0px;
+                            border-top-left-radius: 10px;
+
+                            > dt {
+                                text-align: left;
+                                padding-left: 0px;
+                                padding-right: 20px;
+                                color: #93D057;
+                            }
+
+                            > dd {
+                                text-align: left;
+                                color: #EEE;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
     }
 </style>
